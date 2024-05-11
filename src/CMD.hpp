@@ -13,7 +13,7 @@
 
 using str = std::string;
 
-typedef void (*ScriptFunction)(std::vector<str>);
+typedef void (*ScriptFunction)(std::vector<str>&);
 typedef void (*UpdateFunction)(void);
 using Onzero = UpdateFunction;
 
@@ -75,7 +75,7 @@ namespace CMD {
 		}
 	}
 
-	void testtriggers(std::vector<str> toks, std::vector<Trigger>& triggers) {
+	void testtriggers(std::vector<str>& toks, std::vector<Trigger>& triggers) {
 		std::vector<int> erase = {};
 		for(int i = 0; i < triggers.size(); i++) {
 			Trigger trigger = triggers[i];
@@ -128,17 +128,13 @@ namespace CMD {
 		testtriggers(args, triggersafter);
 	}
 
-	void exittt() {
+	void exitt(std::vector<str> args) {
 		std::cout << "Exiting...\n";
 		log(prgname + " terminated");
 		Engine.detach();
 		if(live) {
 			Spawner.detach();
 		}
-	}
-
-	void exitt(std::vector<str> args) {
-		std::thread end = std::thread(exittt);
 	}
 
 	void update() {
@@ -167,7 +163,7 @@ namespace CMD {
 			updatee = upadateee;
 			live = true;
 		}
-		commands["exit"] = exitt;
+		addcommand("exit", exitt);
 		logfile << "\n\n\n[" << gettime() << "] : " << name << " initialized\n" << name << " ver " << ver << '\n';
 	}
 
