@@ -4,6 +4,7 @@
 
 #include "./CMD.hpp"
 
+using CMD::str;
 str name = "test";
 
 str ver = "0.0.0";

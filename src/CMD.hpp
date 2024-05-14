@@ -11,16 +11,17 @@
 #include "./skylibs/split.hpp"
 #include "./skylibs/eraseat.hpp"
 
-using str = std::string;
-
-typedef void (*ScriptFunction)(std::vector<str>&);
-typedef void (*UpdateFunction)(void);
-using Onzero = UpdateFunction;
-
-typedef bool (*Condition)(std::vector<str>);
-typedef void (*Result)(std::vector<str>);
 
 namespace CMD {
+
+	using str = std::string;
+
+	typedef void (*ScriptFunction)(std::vector<str>&);
+	typedef void (*UpdateFunction)(void);
+	using Onzero = UpdateFunction;
+
+	typedef bool (*Condition)(std::vector<str>);
+	typedef void (*Result)(std::vector<str>);
 
 	struct Trigger {
 		Condition condition;
