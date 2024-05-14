@@ -77,7 +77,8 @@ namespace CMD {
 
 	void testtriggers(std::vector<str>& toks, std::vector<Trigger>& triggers) {
 		std::vector<int> erase = {};
-		for(int i = 0; i < triggers.size(); i++) {
+                using size_t = decltype(erase)::size_type;
+		for(size_t i = 0; i < triggers.size(); i++) {
 			Trigger trigger = triggers[i];
 			if(trigger.condition(toks)) {
 				trigger.result(toks);
@@ -86,7 +87,7 @@ namespace CMD {
 				}
 			}
 		}
-		for(int i = 0; i < erase.size(); i++) {
+		for(size_t i = 0; i < erase.size(); i++) {
 			eraseAt(triggers, erase[i]);
 		}
 	}
@@ -128,7 +129,7 @@ namespace CMD {
 		testtriggers(args, triggersafter);
 	}
 
-	void exitt(std::vector<str> args) {
+	void exitt(std::vector<str> &args) {
 		std::cout << "Exiting...\n";
 		log(prgname + " terminated");
 		Engine.detach();
@@ -138,8 +139,9 @@ namespace CMD {
 	}
 
 	void update() {
-		testtriggers({}, triggersanytime);
-		updatee();
+           ::std::vector<str> empty;
+           testtriggers(empty, triggersanytime);
+           updatee();
 	}
 
 	void bungle() {}
