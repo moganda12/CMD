@@ -52,6 +52,8 @@ namespace CMD {
 	std::vector<Trigger> triggersafter;
 	std::vector<Trigger> triggersanytime;
 
+        constexpr auto update_interval = ::std::chrono::milliseconds{100};
+
 	bool live;
 
 	UpdateFunction updatee;
@@ -146,6 +148,81 @@ namespace CMD {
 	}
 
 	void bungle() {}
+
+        ::std::mutex command_mutex;
+        ::std::condition_variable command_ready_condition;
+        ScriptFunction command = nullptr;
+        ::std::vector<str> arguments;
+
+        void engine_loop(
+                ::std::stop_token const stop,
+                str const name,
+                UpdateFunction updater
+        ) {
+           using clock = ::std::chrono::high_resolution_clock;
+           auto last_update = clock::now();
+           auto next_update = last_update + update_interval;
+           // Common code.
+           auto check_time = [&last_update, &next_update]() {
+              auto current_time = clock::now();
+              // Account for the clock possibly going backwards
+              // (someone sets the time, for example).
+              if (current_time < last_update) {
+                 last_update = current_time;
+                 next_update = current_time + update_interval;
+              }
+              return current_time;
+           };
+           while (!stop.stop_requested()) {
+              ::std::unique_lock lk{command_mutex};
+              auto current_time = check_time();
+              auto time_to_wait = next_update - current_time;
+              auto const time_zero = time_to_wait.zero();
+              if (time_to_wait < time_zero) {
+                 time_to_wait = time_zero;
+              }
+              command_ready_condition.wait_for(
+                      lk, time_to_wait,
+                      [&stop]{
+                         return stop.stop_requested() || command != nullptr;
+                      }
+              );
+              if (!stop.stop_requested()) {
+                 if (command != nullptr) {
+                    // Copy out command and arguments.
+                    auto command_copy = command;
+                    decltype(arguments) arg_copy;
+                    // Using swap in this way here cleanly sets arguments to be
+                    // again empty, while simultaneously copying its old value
+                    // (the value before it was empty) into arg_copy.
+                    arg_copy.swap(arguments);
+                    command = nullptr;
+                    lk.release();
+                    command_copy(arg_copy);
+                 } else {
+                    lk.release();
+                 }
+                 if (!stop.stop_requested()) {
+                    current_time = check_time();
+                    if (current_time >= next_update) {
+                       log("Running updater.");
+                       updater();
+                       // Moving time forward in this way makes sure the update
+                       // interval remains consistent even if commands or updates
+                       // take some amount of time.
+                       last_update = next_update;
+                       next_update += update_interval;
+                    }
+                 }
+              }
+           }
+           log("Stop of engine loop requested!");
+        }
+
+        ::std::jthread start_engine(str const &name, UpdateFunction updater) {
+           // jthread has the stop semaphore stuff built into it.
+           return ::std::jthread(engine_loop, name, updater);
+        }
 
 	void errzero() {
 		std::cout << "BAD BOY: ENETER A REAL COMMAND\n";

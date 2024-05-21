@@ -24,6 +24,7 @@ bool adisAbaba(std::vector<str> args) {
 }
 
 int main() {
+	auto engine_thread = CMD::start_engine(name, CMD::bungle);
 	CMD::init(name, "Command? ");
 	CMD::log("Booting " + name + ".\n ver " + ver);
 	CMD::addcommand("dummy", dummy);
