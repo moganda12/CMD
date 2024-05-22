@@ -149,6 +149,17 @@ namespace CMD {
 
 	void bungle() {}
 
+        void execute_command(
+                ScriptFunction command,
+                ::std::vector <str> args)
+        {
+           command(args);
+        }
+
+        void execute_update(UpdateFunction updater) {
+           updater();
+        }
+
         ::std::mutex command_mutex;
         ::std::condition_variable command_ready_condition;
         ScriptFunction command = nullptr;
@@ -191,14 +202,23 @@ namespace CMD {
                  if (command != nullptr) {
                     // Copy out command and arguments.
                     auto command_copy = command;
+                    // So, if someone changes the type of arguments,
+                    // this will still be right.
                     decltype(arguments) arg_copy;
                     // Using swap in this way here cleanly sets arguments to be
                     // again empty, while simultaneously copying its old value
                     // (the value before it was empty) into arg_copy.
                     arg_copy.swap(arguments);
+                    // Now rest command to nullptr to indicate we have it and
+                    // are ready for a new command.
                     command = nullptr;
+                    // Release the lock since we're done messing with command
+                    // and arguments now.
                     lk.release();
-                    command_copy(arg_copy);
+                    // Notify the command reading and parsing loop if it's
+                    // waiting to set a command.
+                    command_ready_condition.notify_all();
+                    execute_command(command_copy, ::std::move(arg_copy));
                  } else {
                     lk.release();
                  }
@@ -206,10 +226,10 @@ namespace CMD {
                     current_time = check_time();
                     if (current_time >= next_update) {
                        log("Running updater.");
-                       updater();
+                       execute_update(updater);
                        // Moving time forward in this way makes sure the update
-                       // interval remains consistent even if commands or updates
-                       // take some amount of time.
+                       // interval remains consistent even if commands or
+                       // updates take some amount of time.
                        last_update = next_update;
                        next_update += update_interval;
                     }
