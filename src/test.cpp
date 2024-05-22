@@ -28,7 +28,7 @@ int main() {
 	CMD::init(name, "Command? ");
 	CMD::log("Booting " + name + ".\n ver " + ver);
 	CMD::addcommand("dummy", dummy);
-	CMD::addtrigger(adisAbaba, dummy, true, 45);
+	// CMD::addtrigger(adisAbaba, dummy, true, 45);
 	CMD::log("Program booted");
 	CMD::run();
 	sleep(6);

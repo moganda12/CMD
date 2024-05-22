@@ -29,6 +29,12 @@ namespace CMD {
 		bool once;
 	};
 
+        enum class TriggerTime {
+           Before,
+           After,
+           Anytime
+        };
+
 	bool on = false;
 	
 	str name = "CMD:\\";
@@ -62,15 +68,15 @@ namespace CMD {
 
 	Onzero onzero;
 
-	void addtrigger(Condition condition, Result result, bool once, int time = 0) {
+	void addtrigger(Condition condition, Result result, bool once, TriggerTime time) {
 		switch(time) {
-			case 0:
+			case TriggerTime::Before:
 				triggersbefore.push_back({condition, result, once});
 				break;
-			case 1:
+                	case TriggerTime::After:
 				triggersafter.push_back({condition, result, once});
 				break;
-			case 2:
+                	case TriggerTime::Anytime:
 				triggersanytime.push_back({condition, result, once});
 				break;
 			default:
