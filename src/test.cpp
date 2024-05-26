@@ -9,10 +9,6 @@ str name = "test";
 
 str ver = "0.0.0";
 
-void dummy(std::vector<str> args) {
-	std::cout << "dummy\n";
-}
-
 void dummy(std::vector<str>& args) {
 	std::cout << "dummy\n";
 }
