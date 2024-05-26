@@ -17,6 +17,10 @@ void dummy(std::vector<str>& args) {
 	std::cout << "dummy\n";
 }
 
+void my_updater() {
+	::std::cout << "Updating game state.\n";
+}
+
 int abalabada = 0;
 
 bool adisAbaba(std::vector<str> args) {
@@ -24,15 +28,14 @@ bool adisAbaba(std::vector<str> args) {
 }
 
 int main() {
-	auto engine_thread = CMD::start_engine(name, CMD::bungle);
-	CMD::init(name, "Command? ");
+	auto engine_thread = CMD::init(name, "Command? ");
 	CMD::log("Booting " + name + ".\n ver " + ver);
 	CMD::addcommand("dummy", dummy);
-	// CMD::addtrigger(adisAbaba, dummy, true, 45);
 	CMD::log("Program booted");
-	CMD::run();
-	sleep(6);
+	CMD::command_loop(CMD::errzero);
+        CMD::log("Requesting stop.");
+	engine_thread.request_stop();
 	abalabada = 1234;
-	CMD::Engine.join();
+	engine_thread.join();
 	return 0;
 }
