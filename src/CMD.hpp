@@ -23,12 +23,6 @@ namespace CMD {
 	typedef bool (*Condition)(std::vector<str>);
 	typedef void (*Result)(std::vector<str>);
 
-	struct Trigger {
-		Condition condition;
-		Result result;
-		bool once;
-	};
-
         enum class TriggerTime {
            Before,
            After,
@@ -54,13 +48,6 @@ namespace CMD {
 	std::thread Update;
 	std::thread Spawner;
 
-        ::std::mutex tg_before_mutex;
-	std::vector<Trigger> triggersbefore;
-	::std::mutex tg_after_mutex;
-	std::vector<Trigger> triggersafter;
-	::std::mutex tg_anytime_mutex;
-	std::vector<Trigger> triggersanytime;
-
         constexpr auto update_interval = ::std::chrono::milliseconds{100};
 
 	bool live;
@@ -70,48 +57,6 @@ namespace CMD {
 	int interval;
 
 	Onzero onzero;
-
-	void addtrigger(Condition condition, Result result, bool once, TriggerTime time) {
-		switch(time) {
-			case TriggerTime::Before:
-				{
-					::std::lock_guard lk{tg_before_mutex};
-					triggersbefore.push_back({condition, result, once});
-				}
-				break;
-                	case TriggerTime::After:
-				{
-					::std::lock_guard lk{tg_after_mutex};
-					triggersafter.push_back({condition, result, once});
-				}
-				break;
-                	case TriggerTime::Anytime:
-				{
-					::std::lock_guard lk{tg_anytime_mutex};
-					triggersanytime.push_back({condition, result, once});
-				}
-				break;
-			default:
-				logfile << "YU DUN MESSED UP SILLY: INVALID TIME FO LITTE TRIGGGY PIGGY\n";
-		}
-	}
-
-	void testtriggers(std::vector<str>& toks, std::vector<Trigger>& triggers) {
-		std::vector<int> erase = {};
-                using size_t = decltype(erase)::size_type;
-		for(size_t i = 0; i < triggers.size(); i++) {
-			Trigger trigger = triggers[i];
-			if(trigger.condition(toks)) {
-				trigger.result(toks);
-				if(trigger.once) {
-					erase.insert(erase.begin(), i);
-				}
-			}
-		}
-		for(size_t i = 0; i < erase.size(); i++) {
-			eraseAt(triggers, erase[i]);
-		}
-	}
 
 	inline str gettime() {
 		std::time_t time = std::time(nullptr);
@@ -136,7 +81,6 @@ namespace CMD {
 
 	void runcomm(str commandfull) {
 		std::vector<str> args = sky::split(commandfull, " ");
-		testtriggers(args, triggersbefore);
 		if(args.size() > 0) {
 		str command = args[0];
 		args.erase(args.begin());
@@ -147,7 +91,6 @@ namespace CMD {
 			std::cout << "Command " + command + " not found.\n";
 		}
 		} else {onzero();}
-		testtriggers(args, triggersafter);
 	}
 
 	void exitt(std::vector<str> &args) {
@@ -161,7 +104,6 @@ namespace CMD {
 
 	void update() {
            ::std::vector<str> empty;
-           testtriggers(empty, triggersanytime);
            updatee();
 	}
 
