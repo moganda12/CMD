@@ -10,7 +10,22 @@ str name = "test";
 str ver = "0.0.0";
 
 void dummy(std::vector<str>& args) {
-	std::cout << "dummy\n";
+   using ::std::cout;
+   if (args.empty()) {
+      cout << "dummy\n";
+   } else {
+      cout << "dummy [";
+      bool need_comma = false;
+      for (auto const &arg: args) {
+         if (need_comma) {
+            cout << ", ";
+         } else {
+            need_comma = true;
+         }
+         cout << '"' << arg << '"';
+      }
+      cout << "]\n";
+   }
 }
 
 void my_updater() {
