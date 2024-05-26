@@ -54,8 +54,11 @@ namespace CMD {
 	std::thread Update;
 	std::thread Spawner;
 
+        ::std::mutex tg_before_mutex;
 	std::vector<Trigger> triggersbefore;
+	::std::mutex tg_after_mutex;
 	std::vector<Trigger> triggersafter;
+	::std::mutex tg_anytime_mutex;
 	std::vector<Trigger> triggersanytime;
 
         constexpr auto update_interval = ::std::chrono::milliseconds{100};
@@ -71,13 +74,22 @@ namespace CMD {
 	void addtrigger(Condition condition, Result result, bool once, TriggerTime time) {
 		switch(time) {
 			case TriggerTime::Before:
-				triggersbefore.push_back({condition, result, once});
+				{
+					::std::lock_guard lk{tg_before_mutex};
+					triggersbefore.push_back({condition, result, once});
+				}
 				break;
                 	case TriggerTime::After:
-				triggersafter.push_back({condition, result, once});
+				{
+					::std::lock_guard lk{tg_after_mutex};
+					triggersafter.push_back({condition, result, once});
+				}
 				break;
                 	case TriggerTime::Anytime:
-				triggersanytime.push_back({condition, result, once});
+				{
+					::std::lock_guard lk{tg_anytime_mutex};
+					triggersanytime.push_back({condition, result, once});
+				}
 				break;
 			default:
 				logfile << "YU DUN MESSED UP SILLY: INVALID TIME FO LITTE TRIGGGY PIGGY\n";
