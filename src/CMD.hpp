@@ -40,16 +40,21 @@ namespace CMD {
 	std::thread Update;
 	std::thread Spawner;
 
-	inline str gettime() {
-		std::time_t time = std::time(nullptr); // get current time
-		// convert time to string
-                char time_string_buffer[26];
-                // This is called from multiple threads. It needs to use
-                // asctime_r, not asctime.
-		str temp = ::asctime_r(std::localtime(&time), time_string_buffer);
-		temp.pop_back(); // remove trailing newline
-		return temp;
-	}
+   inline str gettime(::std::time_t time) {
+      // convert time to string
+      char time_string_buffer[26];
+      // This is called from multiple threads. It needs to use
+      // asctime_r, not asctime.
+      str temp = ::asctime_r(std::localtime(&time), time_string_buffer);
+      temp.pop_back(); // remove trailing newline
+      return temp;
+   }
+
+   inline str gettime() {
+      std::time_t time = std::time(nullptr); // get current time
+      return gettime(time);
+   }
+
 	void log(str message, str user = "game") {
 		logfile << "[" << gettime() << "] <" << user << ">: " << message << '\n';
                 logfile.flush();
@@ -119,6 +124,7 @@ namespace CMD {
                 ::std::chrono::microseconds update_interval
         ) {
            using clock = ::std::chrono::high_resolution_clock;
+           auto const engine_start = clock::now();
            auto last_update = clock::now();
            auto next_update = last_update + update_interval;
            // Common code.
@@ -141,7 +147,8 @@ namespace CMD {
               }
               {
                  ::std::ostringstream logmsg;
-                 logmsg << "time_to_wait: " << time_to_wait;
+                 auto const usecs = ::std::chrono::duration_cast<::std::chrono::microseconds>(time_to_wait);
+                 logmsg << "time_to_wait: " << usecs.count() << " usecs";
                  CMD::log(logmsg.str());
               }
               { // Limit scrope for lock.
@@ -181,6 +188,10 @@ namespace CMD {
               if (!stop.stop_requested()) {
                  current_time = check_time();
                  if (current_time >= next_update) {
+                    auto in_seconds = [](auto time) {
+                       using double_seconds = ::std::chrono::duration<double>;
+                       return double_seconds{time};
+                    };
                     log("Running updater.");
                     execute_update(updater);
                     std::ostringstream logmsg;
@@ -189,7 +200,9 @@ namespace CMD {
                     // updates take some amount of time.
                     last_update = next_update;
                     next_update += update_interval;
-                    logmsg << "last_update: " << last_update << " next_update: " << next_update;
+                    auto const last_since_start = in_seconds(last_update - engine_start);
+                    auto const next_since_start = in_seconds(next_update - engine_start);
+                    logmsg << "last_update: start+" << last_since_start.count() << "s next_update: start+" << next_since_start.count() << 's';
                     CMD::log(logmsg.str());
                  }
               }

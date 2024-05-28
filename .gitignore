@@ -32,5 +32,8 @@
 *.app
 
 test
+/main
+/main-debug
+/.idea/
 
 .ccls-cache
