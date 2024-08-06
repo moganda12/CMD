@@ -1,7 +1,4 @@
-compile = "make -s"
-run = "./main"
-entrypoint = "main.cpp"
-hidden = ["main", "**/*.o", "**/*.d", ".ccls-cache", "Makefile"]
+run = "sh make.sh Transistor.cpp clicker"
 
 [nix]
 channel = "stable-22_11"
@@ -62,7 +59,7 @@ type = "cppdbg"
 [languages]
 
 [languages.cpp]
-pattern = "**/*.{cpp,h}"
+pattern = "**/*.{cpp,hpp}"
 
 [languages.cpp.languageServer]
 start = "ccls"

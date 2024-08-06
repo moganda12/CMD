@@ -39,7 +39,7 @@ bool adisAbaba(std::vector<str> args) {
 }
 
 int main() {
-	auto engine_thread = CMD::init(name, "Command? ");
+	std::jthread engine_thread = CMD::init(name, "Command? ");
 	CMD::log("Booting " + name + ".\n ver " + ver);
    
 	CMD::addcommand("dummy", dummy);

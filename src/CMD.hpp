@@ -11,8 +11,9 @@
 #include "./skylibs/split.hpp"
 #include "./skylibs/eraseat.hpp"
 
-
 namespace CMD {
+
+    long int ticks = 0;
 
     using str = std::string;
 
@@ -28,6 +29,7 @@ namespace CMD {
     str ver = "0.1.0";
 
     str prgname;
+    str exitcomm = "exit";
 
     str prompt;
     
@@ -52,9 +54,8 @@ namespace CMD {
         return gettime(time);
     }
 
-    void log(str message, str user = "game") {
-        logfile << "[" << gettime() << "] <" << user << ">: " << message << '\n';
-                     logfile.flush();
+    void log(str message, str user = prgname) {
+        logfile << "[" << gettime() << "] <" << user << ">: " << message << std::endl;
     }
 
     void addcommand(str name, ScriptFunction func) {
@@ -69,6 +70,7 @@ namespace CMD {
     }
 
     void bungle() {}
+    void bungle(std::vector<str>& bung) {}
 
           void execute_command(
                      ScriptFunction command,
@@ -84,6 +86,7 @@ namespace CMD {
           ::std::mutex command_mutex;
           ::std::condition_variable command_ready_condition;
           ScriptFunction command = nullptr;
+          ScriptFunction exit = bungle;
           ::std::vector<str> arguments;
 
           bool runcomm(str commandfull, Onzero onzero) {
@@ -91,8 +94,9 @@ namespace CMD {
               if(args.size() > 0) {
                   str command_name = args[0];
                   args.erase(args.begin());
-                  if (command_name == "exit") {
+                  if (command_name == exitcomm) {
                       // Treat exit specially.
+                      execute_command(exit, args);
                       return false;
                   }
                   auto const search_result = commands.find(command_name);
@@ -186,6 +190,7 @@ namespace CMD {
                           // Finally execute the command in the context of the game
                           // engine loop.
                           execute_command(command_copy, ::std::move(arg_copy));
+                          ticks++;
                       }
                   }
                   if (!stop.stop_requested()) {
@@ -214,14 +219,14 @@ namespace CMD {
                       }
                   }
               }
-              log("Stop of engine loop requested!");
+              log("Stop of engine loop requested!", "CMD:\\");
           }
 
     void errzero() {
         std::cout << "BAD BOY: ENETER A REAL COMMAND\n";
     }
 
-          constexpr ::std::chrono::microseconds sixteenth_second{62500};
+    constexpr ::std::chrono::microseconds sixteenth_second{62500};
 
     inline ::std::jthread init(
                      str tename,
@@ -229,7 +234,6 @@ namespace CMD {
                      UpdateFunction updater = bungle,
                      ::std::chrono::microseconds interval = sixteenth_second
     ) {
-        logfile.open("log.txt", std::ios::app);
         prgname = tename;
         prompt = promptstyle;
                      ::std::jthread game_thread{engine_loop, tename, updater, interval};
@@ -237,15 +241,24 @@ namespace CMD {
                      return game_thread; // Named Value Return Optimization applies.
     }
 
-    void command_loop(Onzero onzero) {
+    inline void initlog() {
+        logfile.open("log.txt", std::ios::app);
+    }
+
+    void command_loop(Onzero onzero = errzero) {
         bool exited = false;
         while(!exited) {
             str command;
-                                // Use ::std::flush to make sure prompt appears
-                                // before read.
+                        // Use ::std::flush to make sure prompt appears
+                        // before read.
             std::cout << prompt << ::std::flush;
             std::getline(std::cin, command);
             exited = !runcomm(command, onzero);
         }
+    }
+
+    void kill(std::jthread &thread) {
+        thread.request_stop();
+        thread.join();
     }
 };
