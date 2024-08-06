@@ -140,3 +140,129 @@ CMD:\ ver 0.1.0
 [Tue Aug  6 19:17:47 2024] <Transistor Clicker>: They have-1701 transistors!
 [Tue Aug  6 19:17:50 2024] <Transistor Clicker>: Terminating...
 [Tue Aug  6 19:17:50 2024] <CMD:\>: Stop of engine loop requested!
+
+
+
+[Tue Aug  6 19:45:04 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 19:45:04 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 19:45:10 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 19:45:10 2024] <Transistor Clicker>: They have0 transistors!
+[Tue Aug  6 19:45:23 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 19:45:23 2024] <Transistor Clicker>: They have31 transistors!
+[Tue Aug  6 19:45:41 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 19:45:41 2024] <Transistor Clicker>: They have16 transistors!
+[Tue Aug  6 19:59:21 2024] <Transistor Clicker>: Terminating...
+[Tue Aug  6 19:59:21 2024] <CMD:\>: Stop of engine loop requested!
+
+
+
+[Tue Aug  6 19:59:37 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 19:59:37 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 20:00:25 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 20:00:25 2024] <Transistor Clicker>: They have39 transistors!
+[Tue Aug  6 20:09:57 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 20:09:57 2024] <Transistor Clicker>: They have-1 transistors!
+[Tue Aug  6 20:10:18 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 20:10:18 2024] <Transistor Clicker>: They have16 transistors!
+[Tue Aug  6 20:10:38 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 20:10:38 2024] <Transistor Clicker>: They have16 transistors!
+[Tue Aug  6 20:14:22 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 20:14:22 2024] <Transistor Clicker>: They have16 transistors!
+[Tue Aug  6 20:14:58 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 20:14:58 2024] <Transistor Clicker>: They have22 transistors!
+
+
+
+[Tue Aug  6 21:42:10 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 21:42:10 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 21:42:59 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 21:42:59 2024] <Transistor Clicker>: They have55 transistors!
+[Tue Aug  6 21:43:52 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 21:44:38 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 21:44:38 2024] <Transistor Clicker>: They have86 transistors!
+[Tue Aug  6 21:45:04 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 21:45:04 2024] <Transistor Clicker>: They have169 transistors!
+[Tue Aug  6 21:45:19 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 21:45:19 2024] <Transistor Clicker>: They have170 transistors!
+
+
+
+[Tue Aug  6 22:01:41 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: cursor:0xb74e44485a4e28b9
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: moss:0x690c4817c9076e6f
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: smallFAB:0xe43b35088a78a64b
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: mediumFAB:0xe83d2885a14ec7bf
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: largeFAB:0x91cdbbde9be49c6c
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: i860:0xcffb4d01579b90fc
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: startup:0x7e0f87aed3ba77de
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: oak tree:0x5b53cbac0a1c2f4b
+[Tue Aug  6 22:01:41 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 22:30:17 2024] <Transistor Clicker>: Terminating...
+[Tue Aug  6 22:30:17 2024] <CMD:\>: Stop of engine loop requested!
+
+
+
+[Tue Aug  6 22:36:49 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: cursor:-5238174239041902407
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: moss:7569504340697116271
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: smallFAB:-2000947298636880309
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: mediumFAB:-1712167728928864321
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: largeFAB:-7940484003211731860
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: i860:-3460087220543975172
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: startup:9083628158375851998
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: oak tree:6580827420282859339
+[Tue Aug  6 22:36:49 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 22:36:53 2024] <Transistor Clicker>: Terminating...
+[Tue Aug  6 22:36:53 2024] <CMD:\>: Stop of engine loop requested!
+
+
+
+[Tue Aug  6 22:55:50 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 22:55:50 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 22:56:14 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 22:56:14 2024] <Transistor Clicker>: They have102 transistors!
+[Tue Aug  6 22:56:21 2024] <Transistor Clicker>: Terminating...
+[Tue Aug  6 22:56:22 2024] <CMD:\>: Stop of engine loop requested!
+
+
+
+[Tue Aug  6 22:58:18 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 22:58:18 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 22:58:33 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 22:58:33 2024] <Transistor Clicker>: They have65 transistors!
+[Tue Aug  6 23:00:04 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:00:04 2024] <Transistor Clicker>: They have150 transistors!
+[Tue Aug  6 23:00:21 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:00:21 2024] <Transistor Clicker>: They have60 transistors!
+[Tue Aug  6 23:01:19 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:01:32 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:01:46 2024] <Transistor Clicker>: Ran "balance" command
+
+
+
+[Tue Aug  6 23:13:37 2024] : CMD:\ initialized
+CMD:\ ver 0.1.0
+[Tue Aug  6 23:13:37 2024] <Transistor Clicker>: Program iniitialized
+[Tue Aug  6 23:13:59 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:13:59 2024] <Transistor Clicker>: They have118 transistors!
+[Tue Aug  6 23:21:20 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:21:20 2024] <Transistor Clicker>: They have450 transistors!
+[Tue Aug  6 23:21:49 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:22:31 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:22:31 2024] <Transistor Clicker>: They have150 transistors!
+[Tue Aug  6 23:22:59 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:22:59 2024] <Transistor Clicker>: They have262 transistors!
+[Tue Aug  6 23:24:07 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:24:23 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:24:23 2024] <Transistor Clicker>: They have601 transistors!
+[Tue Aug  6 23:24:55 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:25:27 2024] <Transistor Clicker>: Ran "balance" command
+[Tue Aug  6 23:26:09 2024] <Transistor Clicker>: Terminating...
+[Tue Aug  6 23:26:09 2024] <CMD:\>: Stop of engine loop requested!
