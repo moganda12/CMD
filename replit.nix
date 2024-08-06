@@ -1,5 +1,6 @@
 { pkgs }: {
 	deps = [
+   pkgs.neo-cowsay
    pkgs.neofetch
    pkgs.systemd
 		pkgs.clang_12

@@ -153,13 +153,13 @@ namespace CMD {
                         ::std::ostringstream logmsg;
                         auto const usecs = ::std::chrono::duration_cast<::std::chrono::microseconds>(time_to_wait);
                         logmsg << "time_to_wait: " << usecs.count() << " usecs";
-                        CMD::log(logmsg.str());
+                        CMD::log(logmsg.str(), "CMD:\\");
                       }
                   }
                   { // Limit scrope for lock.
                       ::std::unique_lock lk{command_mutex};
                       if(spam) {
-                          CMD::log("Waiting for command to be non-empty or thread stop.");
+                          CMD::log("Waiting for command to be non-empty or thread stop.", "CMD:\\");
                       }
                       command_ready_condition.wait_for(
                                  lk, time_to_wait,
@@ -236,13 +236,10 @@ namespace CMD {
     ) {
         prgname = tename;
         prompt = promptstyle;
+        logfile.open("log.txt", std::ios::app);
                      ::std::jthread game_thread{engine_loop, tename, updater, interval};
         logfile << "\n\n\n[" << gettime() << "] : " << name << " initialized\n" << name << " ver " << ver << '\n';
                      return game_thread; // Named Value Return Optimization applies.
-    }
-
-    inline void initlog() {
-        logfile.open("log.txt", std::ios::app);
     }
 
     void command_loop(Onzero onzero = errzero) {
